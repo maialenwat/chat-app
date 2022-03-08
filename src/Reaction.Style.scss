@@ -1,0 +1,38 @@
+li {
+    list-style: none;
+}
+
+.reactions .emoji-mart {
+    width: 100% !important;
+}
+
+.reactions .emoji-mart-anchors {
+    display: none;
+}
+
+.reactions .emoji-mart-search {
+    display: none;
+}
+
+.reactions .emoji-mart-bar {
+    display: none;
+}
+
+.reactions .emoji-mart-scroll {
+    overflow: auto;
+    height: auto;
+}
+
+.reactions .emoji-mart-category-label {
+    display: none;
+}
+
+.animated-emoji {
+    animation: bounce 3s forwards;
+}
+
+@keyframes bounce {
+    from {top: 50px; opacity: 1;}
+    20% {opacity: 1;}
+    to {top: -300px; opacity: 0;}
+}

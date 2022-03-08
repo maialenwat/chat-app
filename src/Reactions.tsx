@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { Emoji, EmojiData, Picker } from 'emoji-mart';
 import { customReactionEmojis } from './Emoji';
+import "./Reaction.Style.scss"
 
 interface ReactionsState {
     selectedEmojis: reactionData[];
@@ -16,7 +17,7 @@ export interface reactionData {
     offset: number;
 }
 
-export class Reaction extends Component<ReactionsProps, ReactionsState> {
+export default class Reactions extends Component<ReactionsProps, ReactionsState> {
 
     state: ReactionsState = {
         selectedEmojis: [],
@@ -35,35 +36,31 @@ export class Reaction extends Component<ReactionsProps, ReactionsState> {
         }
     }
 
+
     handleEmojiSelect = (emoji: any) => {
         this.props.onNewReaction({emoji: emoji, offset: Math.floor(Math.random() * 80)});
     }
 
 
-
     render() {
         return (
-            <div className="reactions">
+            <article className="reactions">
                 {this.state.selectedEmojis.map((reaction, index) => {
                     return (
-                        <li className="animated-emoji" style={{ right: reaction.offset }} key={index}>
+                        <li className='animated-emoji' style={{ right: reaction.offset }} key={index}>
                             <Emoji emoji={reaction.emoji} size={32} set="facebook" />
                         </li>
                     )
                 })}
-
+                
                 <Picker
                     perLine={4}
-                    showPreview={false}
-                    showSkinTones={false}
                     include={['custom']}
                     custom={customReactionEmojis}
                     onSelect={this.handleEmojiSelect}
                     set="facebook"
                 />
-            </div>
-        )
+            </article>
+        );
     }
 }
-
-export default Reaction
