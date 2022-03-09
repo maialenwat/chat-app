@@ -1,7 +1,3 @@
-li {
-    list-style: none;
-}
-
 .reactions .emoji-mart {
     width: 100% !important;
 }
@@ -28,6 +24,7 @@ li {
 }
 
 .animated-emoji {
+    position: absolute;
     animation: bounce 3s forwards;
 }
 

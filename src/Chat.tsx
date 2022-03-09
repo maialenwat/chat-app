@@ -1,8 +1,10 @@
-import { Button, TextField } from "@mui/material";
+import { Grid, IconButton, TextField } from "@mui/material";
 import { Component } from "react";
-import { customReactionEmojis } from "./Emoji";
+import { customReactionEmojis } from "./Emojis";
 import Reactions from "./Reactions";
 import { reactionData } from "./Reactions";
+import SendIcon from '@mui/icons-material/Send';
+import './Chat.css'
 
 interface BaseMessage<T> {
    type: T;
@@ -122,10 +124,9 @@ export default class Chat extends Component {
       this.setState({ message: "" });
    }
 
-   /**
-   * Envoi la réaction au serveur
-   * Cette méthode sert de callback pour le composant Reactions.tsx
-   * @param emoji
+  /**
+   * Sends reaction to server
+   * @param emoji 
    */
    sendReaction = (emoji: reactionData) => {
       this.ws?.send(
@@ -139,14 +140,16 @@ export default class Chat extends Component {
 
    render() {
       return (
-         <section className="flex flex-col w-72 m-10 shadow-md">
-            <main className="flex mx-1.5 h-96 overflow-auto">
+         <div className="container">
+
+            {/* message thread */}
+            <div className="messages">
                <ul>
                   {this.state.messageList.map((msg, index) => {
                      switch (msg.type) {
                         case "text":
                            return (
-                              <li className="break-words" key={index}>
+                              <li className="message" key={index}>
                                  <p>
                                     <strong>{msg.username}</strong> : {msg.content}
                                  </p>
@@ -159,49 +162,58 @@ export default class Chat extends Component {
                               </li>
                            );
                         case "reaction":
-                           return (
-                              <li key={index}>
-                                 {msg.content}
-                              </li>
-                           )
+                           return <li key={index}>{msg.content}</li>
                      }
                      return null;
                   })}
                </ul>
-            </main>
-            
-            <Reactions
-               onNewReaction={this.sendReaction}
-               reactionToRender={this.state.reaction}
-            />
+            </div>
 
-            <footer className="flex">
-               <TextField
-                  variant="outlined"
-                  size="small"
-                  aria-label="Type a message"
-                  placeholder="Type a message"
-                  type="text"
-                  autoComplete="off"
-                  fullWidth
-                  value={this.state.message}
-                  onChange={(e) => {
-                     this.setState({ message: e.target.value })
-                  }}
-                  onKeyPress={(e) => {
-                     if (e.key === "Enter") this.sendMessage();
-                  }}
-               />
-               <Button
-                  variant="contained"
-                  aria-label="Send Message"
-                  onClick={this.sendMessage}
-               >
-                  Send
-               </Button>
+            <div className="chat-footer">
+                  <Grid container spacing={1} direction="row" alignItems="center">
+                     
+                     {/* reactions */}
+                     <Grid item xs={8}>
+                        <Reactions
+                           onNewReaction={this.sendReaction}
+                           reactionToRender={this.state.reaction}
+                        />
+                     </Grid>
 
-            </footer>
-         </section>
+                     {/* message input */}
+                     <Grid item xs={10}>
+                        <TextField
+                           variant="outlined"
+                           size="small"
+                           type="text"
+                           label="Message"
+                           aria-label="Type a message"
+                           placeholder="Type a message"
+                           autoComplete="off"
+                           fullWidth
+                           value={this.state.message}
+                           onChange={(e) => {
+                              this.setState({ message: e.target.value })
+                           }}
+                           onKeyPress={(e) => {
+                              if (e.key === "Enter") this.sendMessage();
+                           }}
+                        />
+                     </Grid>
+
+                     {/* send button */}
+                     <Grid className="send-btn" item xs={2} justifyContent="center">
+                        <IconButton
+                           color="primary"
+                           aria-label="Send Message"
+                           onClick={this.sendMessage}
+                        >
+                           <SendIcon />
+                        </IconButton>
+                     </Grid>
+                  </Grid>
+            </div>
+         </div>
       )
    }
 }

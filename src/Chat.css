@@ -1,0 +1,49 @@
+ul {
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  width: 300px;
+  height: calc(100vh - 128px);
+  text-align: center;
+  font-variant: small-caps;
+  padding-top: 2rem;
+  border-left: 1em;
+}
+
+.container {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: calc(100vh - 128px);
+  width: 300px;
+  text-align: center;
+  font-variant: small-caps;
+}
+
+.messages {
+  display: flex;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.message {
+  display: flex;
+  word-break: break-all;
+}
+
+.chat-footer {
+  position: fixed;
+  bottom: 5%;
+  width: 300px;
+  padding-left: 10px;
+}
+
+.send-btn {
+  display: flex;
+}
