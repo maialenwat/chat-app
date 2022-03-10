@@ -80,7 +80,6 @@ export default class Chat extends Component {
       this.ws.onmessage = (event: MessageEvent) => {
 
          const data = JSON.parse(event.data) as Message;
-         console.log(data);
 
          if (data.type === "reaction") {
             this.setState({ reaction: data.content });
